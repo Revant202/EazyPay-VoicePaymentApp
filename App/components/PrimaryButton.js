@@ -3,13 +3,12 @@ import { View, Text, StyleSheet } from "react-native";
 
 export default function PrimaryButton(params) {
   return (
-      <Pressable
-        style={({pressed} ) => 
-          [pressed?{opacity:.85}:{},styles.view]
-        }
-      >
-        <Text style={styles.text}>{params.children}</Text>
-      </Pressable>
+    <Pressable
+    onPress={params.onClick}
+      style={({ pressed }) => [pressed ? { opacity: 0.85 } : {}, styles.view]}
+    >
+      <Text style={styles.text}>{params.children}</Text>
+    </Pressable>
   );
 }
 const styles = StyleSheet.create({
