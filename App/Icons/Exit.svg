@@ -1,9 +1,5 @@
-<svg width="25" height="25" xmlns="http://www.w3.org/2000/svg" fill="none">
-
- <g>
-  <title>Layer 1</title>
-  <path id="svg_1" stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="#ffffff" d="m18.25,7.25l5.25,5.25l-5.25,5.25"/>
-  <path id="svg_2" stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="#ffffff" d="m9.5,12.5l14,0"/>
-  <path id="svg_3" stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="#ffffff" d="m9.5,23.5l-7,0c-0.26522,0 -0.51957,-0.1054 -0.70711,-0.2929c-0.18753,-0.1875 -0.29289,-0.4419 -0.29289,-0.7071l0,-20c0,-0.26522 0.10536,-0.51957 0.29289,-0.70711c0.18754,-0.18753 0.44189,-0.29289 0.70711,-0.29289l7,0"/>
- </g>
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M18 11L23.25 16.25L18 21.5" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M14 16L22 16" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M13 25H8.625C8.45924 25 8.30027 24.9138 8.18306 24.7604C8.06585 24.6069 8 24.3988 8 24.1818V7.81818C8 7.60118 8.06585 7.39308 8.18306 7.23964C8.30027 7.0862 8.45924 7 8.625 7H13" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>

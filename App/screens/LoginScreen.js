@@ -14,12 +14,6 @@ function onClickHandler(){
 
   return (
     <View style={styles.container}>
-      <View style={styles.view0}>
-        <Logo width={38} height={32} />
-        <Text style={{ fontSize: 35, fontWeight: "bold", color: "white" }}>
-          EazyPay
-        </Text>
-      </View>
       <View style={styles.view1}>
         <PrimaryButton onClick={onClickHandler}>
           Voice Recognition
@@ -27,11 +21,6 @@ function onClickHandler(){
         <PrimaryButton>Finger Print</PrimaryButton>
         <PrimaryButton>Face Recognition</PrimaryButton>
         <SecondaryButton>Create New Account</SecondaryButton>
-      </View>
-      <View style={styles.view2}>
-        <NavButton>
-          <Exit width={25} height={25} />
-        </NavButton>
       </View>
     </View>
   );
@@ -42,23 +31,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#2C734C",
   },
-  view0: {
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 20,
-  },
   view1: {
-    flex: 3,
+    flex: 1,
+    margin: 50,
+    padding: 50,
     justifyContent: "flex-start",
     alignItems: "center",
-  },
-  view2: {
-    flex: 1,
-    justifyContent: "flex-end",
-    alignItems: "flex-end",
-    margin: 8,
-    padding: 5,
   },
 });
