@@ -36,18 +36,25 @@ export default function App() {
     setRecording(undefined);
     await recording.stopAndUnloadAsync();
     const uri = recording.getURI();
-    const formData = new FormData();
-    console.log(formData)
-    formData.append("file", { uri: uri, type: "audio/3gpp" });
-    const response = await fetch(FLASK_BACKEND, {
-      method: "POST",
-      body: formData,
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-    const data = await response.json();
-    console.log(data);
+    try {
+      const response = await FileSystem.uploadAsync(FLASK_BACKEND, uri);
+      const data = await response.json();
+      console.log(data);
+    } catch (err) {
+      console.log(err);
+    }
+
+    // const formData = new FormData();
+    // console.log(formData)
+
+    // formData.append("file", { uri: uri, type: "audio/3gpp" });
+    // const response = await fetch(FLASK_BACKEND, {
+    //   method: "POST",
+    //   body: formData,
+    //   headers: {
+    //     "Content-Type": "multipart/form-data",
+    //   },
+    // });
   }
 
   return (

@@ -1,4 +1,5 @@
 import os
+import fleep
 import flask
 import werkzeug
 from gtts import gTTS
@@ -23,8 +24,16 @@ def helloWorld():
 @app.route('/audio', methods=['POST','GET'])
 def upload_audio():
     if request.method == 'POST':
-        file=request.files
-        data = request.form['file']
+        data=request.get_data();
+        
+        f=open("output/my.3gp",'wb+')
+        f.write(data)
+        f.close()
+
+
+        # file = request.form.getlist('file')[0]
+        # # filename = request.form.getlist('file')
+        # data = request.form['file']
         # check if the post request has the file part
         # if 'file' not in request.files:
         #     return "No file part"
@@ -35,8 +44,11 @@ def upload_audio():
         # if (file.content_length > 1024 * 1024 * 10):
         #     return 'File too large!', 400
         # # process data here
-        # print(file.filename +" " + file.content_type)
-        print(request.form.getlist('file')[0])
+        # print(file)
+        # print(type(file))
+        # f=open("output/myfile.txt","wb+")
+        # f.write(d)
+        # f.close()
         return json.dumps("ok")
 
 
