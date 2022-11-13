@@ -1,9 +1,16 @@
-from flask import Flask
+import os
+import flask
+import werkzeug
+from gtts import gTTS
+from googletrans import Translator
+import speech_recognition as sr
+from playsound import playsound
+from flask import Flask, redirect
 from flask import request
 from flask import Response
 from flask_cors import CORS
 from pprint import pprint
-import json
+import json, sndhdr
 
 app = Flask(__name__)
 CORS(app)
@@ -14,17 +21,23 @@ def helloWorld():
     return "hello world"
 
 @app.route('/audio', methods=['POST','GET'])
-def process_audio():
-    data = request.get_data()
-    data_length = request.content_length
-
-    if (data_length > 1024 * 1024 * 10):
-        return 'File too large!', 400
-
-    # process data here:
-    print ("Processing data: ", data)
-
-    return json.dumps({ "text": "Audio fucked!" }), 200
+def upload_audio():
+    if request.method == 'POST':
+        file=request.files
+        data = request.form['file']
+        # check if the post request has the file part
+        # if 'file' not in request.files:
+        #     return "No file part"
+        # # If the user does not select a file, the browser submits an
+        # # empty file without a filename.
+        # if file.filename == '':
+        #    return "No selected file"
+        # if (file.content_length > 1024 * 1024 * 10):
+        #     return 'File too large!', 400
+        # # process data here
+        # print(file.filename +" " + file.content_type)
+        print(request.form.getlist('file')[0])
+        return json.dumps("ok")
 
 
 if __name__ == "__main__":
