@@ -10,7 +10,7 @@ import {
 import { Audio } from "expo-av";
 import * as FileSystem from "expo-file-system";
 
-const FLASK_BACKEND = "http://192.168.0.100:5000/audio";
+const FLASK_BACKEND = "http://192.168.29.121:5000/audio";
 
 export default function App() {
   const [recording, setRecording] = React.useState();
@@ -24,7 +24,7 @@ export default function App() {
         playsInSilentModeIOS: true,
       });
       const { recording } = await Audio.Recording.createAsync(
-        Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY
+        Audio.RecordingOptionsPresets.HIGH_QUALITY
       );
       setRecording(recording);
     } catch (err) {
@@ -36,9 +36,10 @@ export default function App() {
     setRecording(undefined);
     await recording.stopAndUnloadAsync();
     const uri = recording.getURI();
+    console.log(uri);
     try {
       const response = await FileSystem.uploadAsync(FLASK_BACKEND, uri);
-      const data = await response.json();
+      const data = await response;
       console.log(data);
     } catch (err) {
       console.log(err);

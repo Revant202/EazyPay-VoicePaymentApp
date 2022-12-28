@@ -1,3 +1,4 @@
+from pydub import AudioSegment
 import os
 import fleep
 import flask
@@ -25,10 +26,19 @@ def helloWorld():
 def upload_audio():
     if request.method == 'POST':
         data=request.get_data();
-        
-        f=open("output/my.3gp",'wb+')
+    
+        f=open("output/audio",'wb+')
         f.write(data)
         f.close()
+
+        with open("output/audio", "rb") as file:
+            info = fleep.get(file.read(128))
+        print(info.extension)
+
+        m4a_file = 'output/audio'
+        wav_filename = r"output/audio.wav"
+        track = AudioSegment.from_file(m4a_file,  format='m4a')
+        file_handle = track.export(wav_filename, format='wav')
 
 
         # file = request.form.getlist('file')[0]
@@ -53,4 +63,4 @@ def upload_audio():
 
 
 if __name__ == "__main__":
-    app.run(host='192.168.0.100', port=5000, debug=True)
+    app.run(host='192.168.29.121', port=5000, debug=True)
