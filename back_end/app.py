@@ -39,28 +39,21 @@ def upload_audio():
         wav_filename = r"output/audio.wav"
         track = AudioSegment.from_file(m4a_file,  format='m4a')
         file_handle = track.export(wav_filename, format='wav')
-
-
-        # file = request.form.getlist('file')[0]
-        # # filename = request.form.getlist('file')
-        # data = request.form['file']
-        # check if the post request has the file part
-        # if 'file' not in request.files:
-        #     return "No file part"
-        # # If the user does not select a file, the browser submits an
-        # # empty file without a filename.
-        # if file.filename == '':
-        #    return "No selected file"
-        # if (file.content_length > 1024 * 1024 * 10):
-        #     return 'File too large!', 400
-        # # process data here
-        # print(file)
-        # print(type(file))
-        # f=open("output/myfile.txt","wb+")
-        # f.write(d)
-        # f.close()
-        return json.dumps("ok")
+        r = sr.Recognizer()
+        with sr.AudioFile(file_handle) as source:
+            text = r.listen(source)
+        try:
+            text_output = r.recognize_google(text, language="ta-IN")
+            print('Converting speech into text ...')
+            print(text_output)
+        except:
+            print("sorry")
+        translator = Translator()
+        response = translator.translate(text_output)
+        print(response.text)
+        return json.dumps(response.text)
 
 
 if __name__ == "__main__":
-    app.run(host='192.168.29.121', port=5000, debug=True)
+    app.run(host='192.168.0.101', port=5000, debug=True)
+    

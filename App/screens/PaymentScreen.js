@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, {useEffect,useState} from "react";
 import {
   Text,
   TextInput,
@@ -10,11 +10,16 @@ import {
 import { Audio } from "expo-av";
 import * as FileSystem from "expo-file-system";
 
-const FLASK_BACKEND = "http://192.168.29.121:5000/audio";
+const FLASK_BACKEND = "http://192.168.0.101:5000/audio";
 
-export default function App() {
-  const [recording, setRecording] = React.useState();
-  const [text, setText] = React.useState("");
+export default function App(navigation) {
+  const [recording, setRecording] = useState();
+  const [text, setText] = useState("");
+  useEffect(() => {
+    if (text.toLowerCase() === "back") {
+      navigation.navigate("PaymentScreen");
+    }
+  }, [text]);
 
   async function startRecording() {
     try {
@@ -40,7 +45,8 @@ export default function App() {
     try {
       const response = await FileSystem.uploadAsync(FLASK_BACKEND, uri);
       const data = await response;
-      console.log(data);
+      setText(data["body"]);
+      console.log(data["body"]);
     } catch (err) {
       console.log(err);
     }
