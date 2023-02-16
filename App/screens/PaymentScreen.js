@@ -7,19 +7,19 @@ import {
   Button,
   KeyboardAvoidingView,
 } from "react-native";
+import Mic from "../Icons/Mic.svg"
 import { Audio } from "expo-av";
 import * as FileSystem from "expo-file-system";
 
-const FLASK_BACKEND = "http://192.168.0.101:5000/audio";
+const FLASK_BACKEND = "http://172.16.113.32:5000/audio";
 
-export default function App(navigation) {
+export default function App({navigation}) {
   const [recording, setRecording] = useState();
   const [text, setText] = useState("");
   useEffect(() => {
-    if (text.toLowerCase() === "back") {
-      navigation.navigate("PaymentScreen");
-    }
-  }, [text]);
+    if(text === "back")
+      navigation.navigate("HomeScreen");
+  }, [text]); 
 
   async function startRecording() {
     try {
@@ -45,8 +45,9 @@ export default function App(navigation) {
     try {
       const response = await FileSystem.uploadAsync(FLASK_BACKEND, uri);
       const data = await response;
-      setText(data["body"]);
-      console.log(data["body"]);
+      var s = data["body"].slice(1, data["body"].length-1).toLowerCase();
+      setText(s);
+      console.log(s);
     } catch (err) {
       console.log(err);
     }
