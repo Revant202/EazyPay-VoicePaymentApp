@@ -48,15 +48,18 @@ def upload_audio():
         with sr.AudioFile(file_handle) as source:
             text = r.listen(source)
         try:
-            text_output = r.recognize_google(text, language="en-IN")
+            text_output = r.recognize_google(text, language="hi-IN")
             print('Converting speech into text ...')
             print(text_output)
+            translator = Translator()
+            response = translator.translate(text_output)
+            text = response.text
+            print(text)
         except:
-            print("sorry")
-        translator = Translator()
-        response = translator.translate(text_output)
-        print(response.text)
-        return json.dumps(response.text)
+            text="sorry, could'nt get that"
+            print(text)
+        
+        return json.dumps(text)
 
 
 if __name__ == "__main__":

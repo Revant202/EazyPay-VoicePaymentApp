@@ -4,7 +4,7 @@ import Logo from "../Icons/Logo.svg";
 
 import PrimaryButton from "../components/PrimaryButton";
 import SecondaryButton from "../components/SecondaryButton";
-
+import Mic from "../components/Mic";
 
 export default function HomeScreen({ navigation }) {
 function onClickHandler(){
@@ -18,6 +18,7 @@ function onClickHandler(){
         <PrimaryButton>Check Balance</PrimaryButton>
         <PrimaryButton>Transaction History</PrimaryButton>
         <SecondaryButton>Add New Bank Account</SecondaryButton>
+        <Mic navigation={navigation} />
       </View>
     </View>
   );

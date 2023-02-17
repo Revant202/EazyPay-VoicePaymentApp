@@ -9,10 +9,11 @@ import NavButton from "./App/components/NavButton";
 import PaymentScreen from "./App/screens/PaymentScreen";
 import HomeScreen from "./App/screens/HomeScreen";
 import LoginScreen from "./App/screens/LoginScreen";
+import Mic from "./App/components/Mic";
 
 const Stack = createNativeStackNavigator();
 
-export default function App() {
+export default function App({navigation}) {
   return (
     <>
       <StatusBar style="Dark" />
@@ -41,7 +42,7 @@ export default function App() {
               headerRight: () => {
                 return (
                   <NavButton>
-                    <Exit width={36} height={36} />
+                    <Mic navigation={navigation}/>
                   </NavButton>
                 );
               },

@@ -6,6 +6,7 @@ import Exit from "../Icons/Exit.svg";
 import PrimaryButton from "../components/PrimaryButton";
 import SecondaryButton from "../components/SecondaryButton";
 import NavButton from "../components/NavButton";
+import Mic from "../components/Mic";
 
 export default function LoginScreen({ navigation }) {
 function onClickHandler(){
@@ -21,6 +22,7 @@ function onClickHandler(){
         <PrimaryButton>Finger Print</PrimaryButton>
         <PrimaryButton>Face Recognition</PrimaryButton>
         <SecondaryButton>Create New Account</SecondaryButton>
+        <Mic navigation={navigation}/>
       </View>
     </View>
   );
