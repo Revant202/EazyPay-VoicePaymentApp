@@ -23,6 +23,43 @@ dic = {"suhan": {"name": "Suhaan Parvez", "contact_no": "5842136845", "UPI_ID": 
        "tushar": {"name": "Tushar Singh", "contact_no": "5842136845", "UPI_ID": "tushar@paytm", "bank_name": "Axis Bank"},
        "aditya": {"name": "Aditya Kumar", "contact_no": "5842136845", "UPI_ID": "aditya@paytm", "bank_name": "SBI"}}
 
+global units
+units = [
+    "zero", "one", "two", "three", "four", "five", "six", "seven", "eight",
+    "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen",
+    "sixteen", "seventeen", "eighteen", "nineteen",
+]
+
+global tens
+tens = ["", "", "twenty", "thirty", "forty",
+        "fifty", "sixty", "seventy", "eighty", "ninety"]
+
+global scales
+scales = ["hundred", "thousand", "million", "billion", "trillion"]
+
+def text2int(textnum, numwords={}):
+    if not numwords:
+      numwords["and"] = (1, 0)
+      for idx, word in enumerate(units):
+          numwords[word] = (1, idx)
+      for idx, word in enumerate(tens):
+          numwords[word] = (1, idx * 10)
+      for idx, word in enumerate(scales):
+          numwords[word] = (10 ** (idx * 3 or 2), 0)
+
+    current = result = 0
+    for word in textnum.split():
+        if word not in numwords:
+          raise Exception("Illegal word: " + word)
+
+        scale, increment = numwords[word]
+        current = current * scale + increment
+        if scale > 100:
+            result += current
+            current = 0
+
+    return result + current
+
 @app.route('/')
 def helloWorld():
     return "hello world"
@@ -48,7 +85,7 @@ def upload_audio():
         with sr.AudioFile(file_handle) as source:
             text = r.listen(source)
         try:
-            text_output = r.recognize_google(text, language="tl-IN")
+            text_output = r.recognize_google(text, language="en-IN")
             print('Converting speech into text ...')
             print(text_output)
             translator = Translator()
@@ -57,8 +94,8 @@ def upload_audio():
             print(text)
             input_words = list(text.split(" "))
             words = list(text.split(" "))
-            rem = ["to", "rupees", "make", "of"]
-            amount = 0
+            rem = ["to", "rupees", "make", "of" ,*scales, *tens, *units]
+            amount = -1
             action = 0
             for x in input_words:
                 print(x)
@@ -80,6 +117,8 @@ def upload_audio():
                 if x in rem:
                     words.remove(x)
             name = words[0]
+            if amount == -1:
+                amount = text2int(" ".join([input_words[input_words.index("rupees")-2], input_words[input_words.index("rupees")-1]]))
             if name in dic:
                 acc_details = dic[name]
             else:

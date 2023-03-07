@@ -50,6 +50,7 @@ export default function App({navigation}) {
               );
             },
             headerTitleAlign: "center",
+            headerTintColor:"white"
           }}
         >
           <Stack.Screen

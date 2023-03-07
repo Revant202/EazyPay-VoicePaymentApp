@@ -3,19 +3,18 @@ import { View, Text, StyleSheet, FlatList } from "react-native";
 import Mic from "../components/Mic.js";
 import SearchBar from "../components/SearchBar.js";
 
-const PaymentScreen = ({navigation,route}) => {
-  const { search_name, search_amount } = route.params;
-  const [name, setName] = useState(search_name);
-  const [amount, setAmount] = useState(search_amount);
-  console.log(search_amount + "ok")
+const PaymentScreen = ({navigation}) => {
+  const [searchText, setSearchText] = useState("");
+  const [searchNumber, setSearchNumber] = useState(0);
   return (
     <View style={styles.container}>
       <SearchBar
-        searchName={name}
-        setSearchName={setName}
-        searchAmount={amount}
-        setSearchAmount={setAmount}
+        searchText={searchText}
+        setSearchText={setSearchText} 
+        searchNumber={searchText}
+        setSearchNumber={setSearchText}
       />
+      <Text>Pay {searchNumber} to {searchText}</Text>
       <Mic navigation={navigation} />
     </View>
   );
