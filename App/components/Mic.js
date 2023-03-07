@@ -4,16 +4,23 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import { Audio } from "expo-av";
 import * as FileSystem from "expo-file-system";
 
-const FLASK_BACKEND = "http://192.168.0.101:5000/audio";
+const FLASK_BACKEND = "http://192.168.0.100:5000/audio";
 
 export default function Mic({ navigation }) {
   const [recording, setRecording] = useState();
-  const [text, setText] = useState("");
+  const [action, setAction] = useState(0);
+  const [amount, setAmount] = useState(0);
+  const [name, setName] = useState("");
   useEffect(() => {
-    if (text === "payment") navigation.navigate("PaymentScreen");
-    if (text === "fingerprint") navigation.navigate("HomeScreen");
-    if (text === "back") navigation.goBack();
-  }, [text]);
+    console.log("ff")
+    if (action === 1)
+      navigation.navigate("DoneScreen",{search_name: name,search_amount:amount});
+    if (action === 2)
+      navigation.navigate("CheckBalance");
+    if(action === 3)
+      navigation.navigate("TransactionHistory");
+    // if (action === "back") navigation.goBack();
+  }, [action,name,amount]);
 
   async function startRecording() {
     try {
@@ -39,9 +46,12 @@ export default function Mic({ navigation }) {
     try {
       const response = await FileSystem.uploadAsync(FLASK_BACKEND, uri);
       const data = await response;
-      var s = data["body"].slice(1, data["body"].length - 1).toLowerCase();
-      setText(s);
-      console.log(s);
+      console.log(data)
+      res = JSON.parse(data["body"]); 
+      console.log(res);
+      setAmount(res["amount"])
+      setName(res["name"])
+      setAction(res["action"]);
     } catch (err) {
       console.log(err);
     }

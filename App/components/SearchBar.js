@@ -7,9 +7,16 @@ const SearchBar = (props) => {
       <TextInput
         placeholder="Search"
         style={styles.input}
-        value={props.searchText}
-        onChangeText={(text) => props.setSearchText(text)}
+        value={props.searchName}
+        onChangeText={(text) => props.setSearchName(text)}
         onSubmitEditing={props.onSubmit}
+      />
+      <TextInput
+        style={styles.input}
+        onChangeText={(text) => props.setSearchAmount(text)}
+        value={props.searchAmount}
+        placeholder="useless placeholder"
+        keyboardType="numeric" 
       />
     </View>
   );

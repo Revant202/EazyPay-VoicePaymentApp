@@ -1,11 +1,6 @@
 import { StyleSheet, Image, View, Text } from "react-native";
-
-import Logo from "../Icons/Logo.svg";
-import Home from "../Icons/Home.svg";
-import Exit from "../Icons/Exit.svg";
 import PrimaryButton from "../components/PrimaryButton";
 import SecondaryButton from "../components/SecondaryButton";
-import NavButton from "../components/NavButton";
 import Mic from "../components/Mic";
 
 export default function LoginScreen({ navigation }) {
