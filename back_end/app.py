@@ -10,6 +10,7 @@ from flask import Flask, redirect
 from flask import request
 from flask import Response
 from flask_cors import CORS
+from flask import send_file
 from pprint import pprint
 import json
 import socket
@@ -17,7 +18,53 @@ hostname = socket.gethostname()
 IPAddr = socket.gethostbyname(hostname)
 app = Flask(__name__)
 CORS(app)
-
+langList= ('afrikaans', 'af', 'albanian', 'sq',
+       'amharic', 'am', 'arabic', 'ar',
+       'armenian', 'hy', 'azerbaijani', 'az',
+       'basque', 'eu', 'belarusian', 'be',
+       'bengali', 'bn', 'bosnian', 'bs', 'bulgarian',
+       'bg', 'catalan', 'ca', 'cebuano',
+       'ceb', 'chichewa', 'ny', 'chinese (simplified)',
+       'zh-cn', 'chinese (traditional)',
+       'zh-tw', 'corsican', 'co', 'croatian', 'hr',
+       'czech', 'cs', 'danish', 'da', 'dutch',
+       'nl', 'english', 'en', 'esperanto', 'eo',
+       'estonian', 'et', 'filipino', 'tl', 'finnish',
+       'fi', 'french', 'fr', 'frisian', 'fy', 'galician',
+       'gl', 'georgian', 'ka', 'german',
+       'de', 'greek', 'el', 'gujarati', 'gu',
+       'haitian creole', 'ht', 'hausa', 'ha',
+       'hawaiian', 'haw', 'hebrew', 'he', 'hindi',
+       'hi', 'hmong', 'hmn', 'hungarian',
+       'hu', 'icelandic', 'is', 'igbo', 'ig', 'indonesian',
+       'id', 'irish', 'ga', 'italian',
+       'it', 'japanese', 'ja', 'javanese', 'jw',
+       'kannada', 'kn', 'kazakh', 'kk', 'khmer',
+       'km', 'korean', 'ko', 'kurdish (kurmanji)',
+       'ku', 'kyrgyz', 'ky', 'lao', 'lo',
+       'latin', 'la', 'latvian', 'lv', 'lithuanian',
+       'lt', 'luxembourgish', 'lb',
+       'macedonian', 'mk', 'malagasy', 'mg', 'malay',
+       'ms', 'malayalam', 'ml', 'maltese',
+       'mt', 'maori', 'mi', 'marathi', 'mr', 'mongolian',
+       'mn', 'myanmar (burmese)', 'my',
+       'nepali', 'ne', 'norwegian', 'no', 'odia', 'or',
+       'pashto', 'ps', 'persian', 'fa',
+       'polish', 'pl', 'portuguese', 'pt', 'punjabi',
+       'pa', 'romanian', 'ro', 'russian',
+       'ru', 'samoan', 'sm', 'scots gaelic', 'gd',
+       'serbian', 'sr', 'sesotho', 'st',
+       'shona', 'sn', 'sindhi', 'sd', 'sinhala', 'si',
+       'slovak', 'sk', 'slovenian', 'sl',
+       'somali', 'so', 'spanish', 'es', 'sundanese',
+       'su', 'swahili', 'sw', 'swedish',
+       'sv', 'tajik', 'tg', 'tamil', 'ta', 'telugu',
+       'te', 'thai', 'th', 'turkish',
+       'tr', 'ukrainian', 'uk', 'urdu', 'ur', 'uyghur',
+       'ug', 'uzbek', 'uz',
+       'vietnamese', 'vi', 'welsh', 'cy', 'xhosa', 'xh',
+       'yiddish', 'yi', 'yoruba',
+       'yo', 'zulu', 'zu')
 dic = {"suhan": {"name": "Suhaan Parvez", "contact_no": "5842136845", "UPI_ID": "suhaan@paytm", "bank_name": "SBI"},
        "anand": {"name": "Anand Bachker", "contact_no": "4856974256", "UPI_ID": "anand@paytm", "bank_name": "PNB"}, 
        "tushar": {"name": "Tushar Singh", "contact_no": "5842136845", "UPI_ID": "tushar@paytm", "bank_name": "Axis Bank"},
@@ -36,6 +83,7 @@ tens = ["", "", "twenty", "thirty", "forty",
 
 global scales
 scales = ["hundred", "thousand", "million", "billion", "trillion"]
+translator = Translator()
 
 def text2int(textnum, numwords={}):
     if not numwords:
@@ -60,10 +108,45 @@ def text2int(textnum, numwords={}):
 
     return result + current
 
-@app.route('/')
-def helloWorld():
-    return "hello world"
 
+@app.route('/setLang', methods=['POST'])
+def set_lang():
+    global lang
+    lang = langList[langList.index(request.json['language'].lower())+1]
+    print("language sucessfully set to " + lang)
+    return ("language sucessfully set to " + lang)
+
+
+@app.route('/transText', methods=['POST'])
+def transText():
+    btnDict = request.json["btn"]
+    for key in btnDict:
+        txt = translator.translate(btnDict[key], dest=lang)
+        btnDict[key] = txt.text
+    print(lang, btnDict)
+    return json.dumps(btnDict)
+
+@app.route('/transAudio', methods=['POST','GET'])
+def transAudio():
+    if request.method == 'POST':
+        translator = Translator()
+        translated = translator.translate(request.json["speak"]["text"], src='en', dest=lang)
+        text_1 = translated.text
+        print(text_1)
+        audio = gTTS(text=text_1, lang=lang, slow=False)
+        path= "./output/trans_voice.wav"
+        audio.save(path)
+        return json.dumps("ok")
+    else:
+        try:
+            return send_file(
+                    path,
+                    mimetype="audio/wav",
+                    as_attachment=True,
+                    attachment_filename="trans_voice.wav")
+        except Exception as e:
+            return str(e)
+    # return json.dumps({"asshole":"got it"})
 
 @app.route('/audio', methods=['POST', 'GET'])
 def upload_audio():
@@ -82,13 +165,13 @@ def upload_audio():
         wav_filename = r"output/audio.wav"
         track = AudioSegment.from_file(m4a_file,  format='m4a')
         file_handle = track.export(wav_filename, format='wav')
+
         with sr.AudioFile(file_handle) as source:
             text = r.listen(source)
         try:
             text_output = r.recognize_google(text, language="en-IN")
             print('Converting speech into text ...')
             print(text_output)
-            translator = Translator()
             response = translator.translate(text_output)
             text = response.text.lower()
             print(text)

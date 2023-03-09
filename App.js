@@ -11,6 +11,7 @@ import LoginScreen from "./App/screens/LoginScreen";
 import TransactionHistory from "./App/screens/TransactionHistory";
 import CheckBalance from "./App/screens/CheckBalance";
 import DoneScreen from "./App/screens/DoneScreen";
+import WelcomeScreen from "./App/screens/WelcomeScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -53,6 +54,10 @@ export default function App({navigation}) {
             headerTintColor:"white"
           }}
         >
+          <Stack.Screen
+            name="WelcomeScreen"
+            component={WelcomeScreen}
+          ></Stack.Screen>
           <Stack.Screen
             name="LoginScreen"
             component={LoginScreen}
