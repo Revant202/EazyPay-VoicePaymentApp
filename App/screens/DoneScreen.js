@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, FlatList,Image } from "react-native";
 import Mic from "../components/Mic.js";
 import SearchBar from "../components/SearchBar.js";
 import { fonts } from "react-native-elements/dist/config/index.js";
-import PrimaryButton from "../components/PrimaryButton.js";
+import SecondaryButton from "../components/SecondaryButton.js";
 const DoneScreen = ({ navigation, route }) => {
   const { search_name, search_amount } = route.params;
   return (
@@ -23,7 +23,7 @@ const DoneScreen = ({ navigation, route }) => {
         <Text style={styles.text}>{search_name.UPI_ID}</Text>
         <Text style={styles.text}>{search_name.bank_name}</Text>
         <View style={styles.v2}>
-          <PrimaryButton>Got it</PrimaryButton>
+          <SecondaryButton onClick={()=>navigation.navigate("HomeScreen")}>Got it</SecondaryButton>
         </View>
       </View>
     </View>
@@ -35,7 +35,7 @@ export default DoneScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#2C734C",
+    backgroundColor: "#0B0A07",
   },
   v1: {
     display: "flex",
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     flex: 1,
     borderRadius: 0.8,
     // backgroundColor: "#fff",
-    marginTop: 10,
+    marginTop: 55,
     justifyContent: "center",
   },
   text: {

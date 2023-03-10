@@ -24,11 +24,11 @@ export default function App({navigation}) {
         <Stack.Navigator
           screenOptions={{
             headerShadowVisible: false,
-            headerStyle: { backgroundColor: "#2C734C" },
+            headerStyle: { backgroundColor: "#0B0A07" },
             headerTitle: () => {
               return (
                 <>
-                  <Logo width={34} height={28} />
+                  <Logo width={30} height={24} />
                   <Text
                     style={{
                       fontSize: 27,
@@ -36,7 +36,7 @@ export default function App({navigation}) {
                       color: "white",
                     }}
                   >
-                    EazyPay
+                    ezPAY
                   </Text>
                 </>
               );
@@ -51,7 +51,7 @@ export default function App({navigation}) {
               );
             },
             headerTitleAlign: "center",
-            headerTintColor:"white"
+            headerTintColor: "white",
           }}
         >
           <Stack.Screen
@@ -75,10 +75,7 @@ export default function App({navigation}) {
             name="CheckBalance"
             component={CheckBalance}
           ></Stack.Screen>
-          <Stack.Screen
-            name="DoneScreen"
-            component={DoneScreen}
-          ></Stack.Screen>
+          <Stack.Screen name="DoneScreen" component={DoneScreen}></Stack.Screen>
         </Stack.Navigator>
       </NavigationContainer>
     </>

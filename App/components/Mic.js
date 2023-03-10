@@ -73,7 +73,7 @@ export default function Mic({ navigation }) {
     <Icon
       name="microphone"
       size={30}
-      color={recording ? "#ffffff" : "#000000"}
+      color={recording ? "red" : "#000000"}
       onPress={recording ? stopRecording : startRecording}
     />
   );

@@ -13,21 +13,21 @@ export default function PrimaryButton(params) {
 }
 const styles = StyleSheet.create({
   view: {
-    width: 300,
-    height: 48,
+    width: 200,
+    height: 50,
     alignSelf: "center",
     borderRadius: 15,
-    backgroundColor: "#6CAE61",
+    backgroundColor: "#7FB285",
     justifyContent: "center",
-    marginTop: 7.5,
-    marginBottom: 7.5,
+    marginTop: 10,
+    marginBottom: 10,
     elevation: 4,
     shadowColor: "black",
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 6,
     shadowOpacity: 0.25,
   },
-  
+
   text: {
     fontWeight: "bold",
     color: "white",
@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     elevation: 3,
     alignSelf: "center",
-    fontSize:16,
+    textAlign:"center",
+    fontSize: 16,
   },
 });

@@ -3,6 +3,7 @@ import { View,Pressable, Text, StyleSheet } from "react-native";
 export default function SecondaryButton(params) {
   return (
     <Pressable
+      onPress={params.onClick}
       style={({ pressed }) => [pressed ? { opacity: 0.85 } : {}, styles.view]}
     >
       <Text style={styles.text}>{params.children}</Text>
@@ -11,19 +12,20 @@ export default function SecondaryButton(params) {
 }
 const styles = StyleSheet.create({
   view: {
-    width: 300,
-    height: 48,
+    width: 200,
+    height: 50,
     alignSelf: "center",
     borderRadius: 15,
-    backgroundColor: "#8B9474",
+    backgroundColor: "#0B0A07",
     justifyContent: "center",
-    marginTop: 7.5,
-    marginBottom: 7.5,
+    marginTop: 35,
+    marginBottom: 15,
   },
   text: {
     color: "#FFFFFF",
     alignSelf: "center",
     fontSize: 15,
     fontWeight: "bold",
+    textAlign: "center",
   },
 });

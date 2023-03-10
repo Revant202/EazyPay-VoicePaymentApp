@@ -134,16 +134,23 @@ def transAudio():
         text_1 = translated.text
         print(text_1)
         audio = gTTS(text=text_1, lang=lang, slow=False)
-        path= "./output/trans_voice.wav"
+        path= "output/trans_voice.mp3"
         audio.save(path)
+        wav_filename = r"output/trans_voice.wav"
+        track = AudioSegment.from_file(path,  format='mp3')
+        file_handle = track.export(wav_filename, format='wav')
+        with open("output/trans_voice.wav", "rb") as file:
+            info = fleep.get(file.read(128))
+        print(info.extension)
+        print(info.mime)
         return json.dumps("ok")
     else:
         try:
             return send_file(
-                    path,
-                    mimetype="audio/wav",
-                    as_attachment=True,
-                    attachment_filename="trans_voice.wav")
+                "output/trans_voice.wav",
+                mimetype="audio/wav",
+                as_attachment=True,
+                attachment_filename="trans_voice.wav")
         except Exception as e:
             return str(e)
     # return json.dumps({"asshole":"got it"})
@@ -169,7 +176,7 @@ def upload_audio():
         with sr.AudioFile(file_handle) as source:
             text = r.listen(source)
         try:
-            text_output = r.recognize_google(text, language="en-IN")
+            text_output = r.recognize_google(text, language=lang)
             print('Converting speech into text ...')
             print(text_output)
             response = translator.translate(text_output)
@@ -177,7 +184,7 @@ def upload_audio():
             print(text)
             input_words = list(text.split(" "))
             words = list(text.split(" "))
-            rem = ["to", "rupees", "make", "of" ,*scales, *tens, *units]
+            rem = ["to", "rupees", "make", "of","were" ,*scales, *tens, *units]
             amount = -1
             action = 0
             for x in input_words:
@@ -188,7 +195,7 @@ def upload_audio():
                 if (x[0] == "₹"):
                     amount = int(x[1:])
                     words.remove(x)
-                if (x == "pay" or x == "payment" or x == "send" or x == "transfer"):
+                if (x == "pay" or x == "payment" or x == "send" or x == "transfer" or x == "give" or x == "sent"):
                     action = 1
                     words.remove(x)
                 if (x == "balance"):
