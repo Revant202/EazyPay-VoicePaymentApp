@@ -16,6 +16,7 @@ import SecondaryButton from "../components/SecondaryButton";
 import Mic from "../components/Mic";
 import Play from "../components/Play.js";
 import Icon from "react-native-vector-icons/FontAwesome";
+import "../global.js"
 
 export default function HomeScreen({ navigation, route }) {
 
@@ -29,9 +30,9 @@ export default function HomeScreen({ navigation, route }) {
   const speak = {
     text: "Welcome to EazyPay App. Press and hold the volume button to give voice commands",
   };
-  const [audioURI, setaudioURI] = useState();
+
   useEffect(() => {
-    fetch("http://192.168.0.100:5000/transText", {
+    fetch(api+"transText/headings", {
       method: "POST",
       body: JSON.stringify({ btn }),
       headers: { "Content-Type": "application/json" },
@@ -41,23 +42,7 @@ export default function HomeScreen({ navigation, route }) {
         console.log(data);
         setbtn(data);
       });
-
-    fetch("http://192.168.0.100:5000/transAudio", {
-      method: "POST",
-      body: JSON.stringify({ speak }),
-      headers: { "Content-Type": "application/json" },
-    });
-    FileSystem.downloadAsync(
-      "http://192.168.0.100:5000/transAudio",
-      FileSystem.documentDirectory + "voice.wav"
-    )
-      .then(({ uri }) => {
-        console.log("Finished downloading to ", uri.split("file://")[1]);
-        setaudioURI(uri.split("file://")[1]);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    
   }, []);
 
   const renderHeader = () => {
@@ -89,7 +74,7 @@ export default function HomeScreen({ navigation, route }) {
       </View>
       <View style={styles.footer}>
         <Mic navigation={navigation} />
-        <Play uri={audioURI} />
+        <Play speak={{speak}}/>
       </View>
     </SafeAreaView>
   );

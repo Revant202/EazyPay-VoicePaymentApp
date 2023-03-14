@@ -17,22 +17,20 @@ import SecondaryButton from "../components/SecondaryButton";
 import Mic from "../components/Mic";
 import Play from "../components/Play.js";
 import Icon from "react-native-vector-icons/FontAwesome";
-
+import "../global.js";
 
 export default function TransactionHistory({ navigation, route }) {
   const [btn, setbtn] = useState({
     hdr: "Your transaction history",
-    b1: "Paid to Anand",
-    b2: "500",
-    b3: "Yesterday, 06:29 PM",
-    b4: "Paid from PNB",
+    b2: Math.floor(Math.random() ).toString()
   });
-  const speak = {
+  const [details, setDetails] = useState({});
+ const speak = {
     text: "Welcome to EazyPay App. Press and hold the volume button to give voice commands",
   };
-  const [audioURI, setaudioURI] = useState();
+
   useEffect(() => {
-    fetch("http://192.168.0.100:5000/transText", {
+    fetch(api + "transText/headings", {
       method: "POST",
       body: JSON.stringify({ btn }),
       headers: { "Content-Type": "application/json" },
@@ -42,40 +40,32 @@ export default function TransactionHistory({ navigation, route }) {
         console.log(data);
         setbtn(data);
       });
-
-    fetch("http://192.168.0.100:5000/transAudio", {
-      method: "POST",
-      body: JSON.stringify({ speak }),
-      headers: { "Content-Type": "application/json" },
-    });
-    FileSystem.downloadAsync(
-      "http://192.168.0.100:5000/transAudio",
-      FileSystem.documentDirectory + "voice.wav"
-    )
-      .then(({ uri }) => {
-        console.log("Finished downloading to ", uri.split("file://")[1]);
-        setaudioURI(uri.split("file://")[1]);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
   }, []);
 
-  const renderHeader = () => {
+const renderHeader = () => {
     return (
       <View style={[styles.header, styles.shadow]}>
         <Text style={styles.headerTitle}>{btn.hdr}</Text>
       </View>
     );
   };
-  const renderBody = () => {
+  const renderBody = ({item:data}) => {
     return (
-      <View style={[styles.header, styles.shadow]}>
-        <Text style={styles.headerTitle}>{btn.b1} </Text>
-        <Text style={styles.headerTitle}>-₹{btn.b2}    </Text>
+      <View style={[styles.detailView, styles.shadow]}>
+        <Text
+          style={[
+            styles.detailText,
+            {
+              color: "#" + Math.floor(Math.random() * 16777215).toString(16),
+              opacity: 0.85,
+            },
+          ]}
+        >
+          {data.name}
+        </Text>
         <View>
-          <Text>{btn.b3}</Text>
-          <Text>{btn.b4}</Text>
+          <Text style={styles.detailText}>{data.contact_no}</Text>
+          <Text style={styles.detailText}>{data.UPI_ID}</Text>
         </View>
       </View>
     );
@@ -85,19 +75,22 @@ export default function TransactionHistory({ navigation, route }) {
       <StatusBar backgroundColor="#FFF" barStyle="dark-content" />
       <View style={styles.viewContainer}>
         {renderHeader()}
-      <FlatList
-          data={[1,2,3,4,5,6,7,8,9,10]}
+        <View style={styles.container}>
+        </View>
+        <FlatList
+          data={Object.keys(details).map((key)=>details[key])}
           renderItem={renderBody}
-          keyExtractor={(item) => item}
-      />
+          keyExtractor={(item) => item.name}
+        />
       </View>
       <View style={styles.footer}>
         <Mic navigation={navigation} />
-        <Play uri={audioURI} />
+        <Play speak={{speak}}/>
       </View>
     </SafeAreaView>
-  );
-}
+     );
+};
+
 
 const styles = StyleSheet.create({
   shadow: {

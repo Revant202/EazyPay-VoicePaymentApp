@@ -3,8 +3,9 @@ import { StyleSheet } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { Audio } from "expo-av";
 import * as FileSystem from "expo-file-system";
+import "../global.js"
 
-const FLASK_BACKEND = "http://192.168.0.100:5000/audio";
+const FLASK_BACKEND = api+"audio";
 
 export default function Mic({ navigation }) {
   const [recording, setRecording] = useState();

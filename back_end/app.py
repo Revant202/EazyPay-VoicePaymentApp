@@ -12,6 +12,8 @@ from flask import Response
 from flask_cors import CORS
 from flask import send_file
 from pprint import pprint
+from indic_transliteration import sanscript
+from indic_transliteration.sanscript import transliterate
 import json
 import socket
 hostname = socket.gethostname()
@@ -65,10 +67,14 @@ langList= ('afrikaans', 'af', 'albanian', 'sq',
        'vietnamese', 'vi', 'welsh', 'cy', 'xhosa', 'xh',
        'yiddish', 'yi', 'yoruba',
        'yo', 'zulu', 'zu')
-dic = {"suhan": {"name": "Suhaan Parvez", "contact_no": "5842136845", "UPI_ID": "suhaan@paytm", "bank_name": "SBI"},
-       "anand": {"name": "Anand Bachker", "contact_no": "4856974256", "UPI_ID": "anand@paytm", "bank_name": "PNB"}, 
-       "tushar": {"name": "Tushar Singh", "contact_no": "5842136845", "UPI_ID": "tushar@paytm", "bank_name": "Axis Bank"},
-       "aditya": {"name": "Aditya Kumar", "contact_no": "5842136845", "UPI_ID": "aditya@paytm", "bank_name": "SBI"}}
+dic = {"suhan": {"name": "Suhaan Parvez", "contact_no": "9842136845", "UPI_ID": "suhaan@paytm", "bank_name": "SBI"},
+       "anand": {"name": "Anand Bachker", "contact_no": "8856974256", "UPI_ID": "anand@paytm", "bank_name": "PNB"}, 
+       "tushar": {"name": "Tushar Singh", "contact_no": "9842136845", "UPI_ID": "tushar@paytm", "bank_name": "Axis Bank"},
+       "aditya": {"name": "Aditya Kumar", "contact_no": "7566876437", "UPI_ID": "aditya@paytm", "bank_name": "SBI"},
+       "ankita": {"name": "Ankita Rai", "contact_no": "7619458372", "UPI_ID": "ankita@paytm", "bank_name": "SBI"},
+       "sakshi": {"name": "Sakshi Gupta", "contact_no": "9167548739", "UPI_ID": "sakshi@paytm", "bank_name": "SBI"},
+       "revant": {"name": "Revant Emany", "contact_no": "7534679824", "UPI_ID": "revant@paytm", "bank_name": "SBI"},
+       "dipanshu": {"name": "Dipanshu Jagat", "contact_no": "99784312768", "UPI_ID": "dipanshu@paytm", "bank_name": "SBI"}}
 
 global units
 units = [
@@ -117,18 +123,51 @@ def set_lang():
     return ("language sucessfully set to " + lang)
 
 
-@app.route('/transText', methods=['POST'])
-def transText():
+@app.route('/transText/headings', methods=['POST'])
+def transHeadings():
     btnDict = request.json["btn"]
     for key in btnDict:
-        txt = translator.translate(btnDict[key], dest=lang)
+        txt = translator.translate(btnDict[key], src='en', dest=lang)
         btnDict[key] = txt.text
     print(lang, btnDict)
     return json.dumps(btnDict)
 
-@app.route('/transAudio', methods=['POST','GET'])
+
+@app.route('/transText/details', methods=['GET'])
+def transDetails():
+    args = request.args
+    name = args.get('name')
+    newDic= {"name": translator.translate(dic[name]["name"], src='en', dest=lang).text,
+            "contact_no": translator.translate(dic[name]["contact_no"], src='en', dest=lang).text,
+            "UPI_ID": dic[name]["UPI_ID"],
+            "bank_name": translator.translate(dic[name]["bank_name"], src='en', dest=lang).text}
+    print(lang, newDic)
+    return json.dumps(newDic)
+
+
+@app.route('/transText/details/all', methods=['GET'])
+def transDetailsall():
+    newDic = {}
+    for name in dic:
+        newDic[name] = {"name": translator.translate(dic[name]["name"], src='en', dest=lang).text,
+                "contact_no": translator.translate(dic[name]["contact_no"], src='en', dest=lang).text,
+                "UPI_ID": dic[name]["UPI_ID"],
+                "bank_name": translator.translate(dic[name]["bank_name"], src='en', dest=lang).text}
+    print(lang, newDic)
+    return json.dumps(newDic)
+
+
+# @app.route('/convText', methods=['POST'])
+# def transText():
+#     btnDict = request.json["btn"]
+#     for key in btnDict: 
+#         txt = translator.translate(btnDict[key], src='en', dest=lang)
+#         btnDict[key] = txt.text
+#     print(lang, btnDict)
+#     return json.dumps(btnDict)
+
+@app.route('/transAudio', methods=['POST'])
 def transAudio():
-    if request.method == 'POST':
         translator = Translator()
         translated = translator.translate(request.json["speak"]["text"], src='en', dest=lang)
         text_1 = translated.text
@@ -144,16 +183,19 @@ def transAudio():
         print(info.extension)
         print(info.mime)
         return json.dumps("ok")
-    else:
-        try:
-            return send_file(
-                "output/trans_voice.wav",
-                mimetype="audio/wav",
-                as_attachment=True,
-                attachment_filename="trans_voice.wav")
-        except Exception as e:
-            return str(e)
     # return json.dumps({"asshole":"got it"})
+
+
+@app.route('/getAudio', methods=['POST', 'GET'])
+def getAudio():
+    try:
+        return send_file(
+            "output/trans_voice.wav",
+            mimetype="audio/wav",
+            as_attachment=True,
+            attachment_filename="trans_voice.wav")
+    except Exception as e:
+        return str(e)
 
 @app.route('/audio', methods=['POST', 'GET'])
 def upload_audio():
@@ -207,14 +249,17 @@ def upload_audio():
                 if x in rem:
                     words.remove(x)
             name = words[0]
-            if amount == -1:
-                amount = text2int(" ".join([input_words[input_words.index("rupees")-2], input_words[input_words.index("rupees")-1]]))
-            if name in dic:
-                acc_details = dic[name]
+            if(action == 1):
+                if amount == -1:
+                    amount = text2int(" ".join([input_words[input_words.index("rupees")-2], input_words[input_words.index("rupees")-1]]))
+                if name in dic:
+                    acc_details = dic[name]
+                else:
+                    acc_details = {"name": "not found", "contact_no": "not found",
+                                "UPI_ID": "--", "bank_name": "--"},
+                res = {"action": action, "amount": amount, "name": acc_details}
             else:
-                acc_details = {"name": "not found", "contact_no": "not found",
-                               "UPI_ID": "--", "bank_name": "--"},
-            res = {"action": action, "amount": amount, "name": acc_details}
+                res = {"action": action, "amount": 0, "name": "--"}
             print(res)
             return json.dumps(res)
         except:  

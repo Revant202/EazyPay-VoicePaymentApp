@@ -13,7 +13,7 @@ const { width } = Dimensions.get("window");
 import SelectDropdown from "react-native-select-dropdown";
 import PrimaryButton from "../components/PrimaryButton";
 
-const countries = [
+const languages = [
   "English",
   "Hindi",
   "Telugu",
@@ -28,7 +28,7 @@ export default Dropdown = ({navigation}) => {
     navigation.navigate("HomeScreen");
     }
   useEffect(() => {
-    fetch("http://192.168.0.100:5000/setLang", {
+    fetch(api+"setLang", {
       method: "POST",
       body: JSON.stringify({ language: lang }),
       headers: { "Content-Type": "application/json" },
@@ -56,7 +56,7 @@ export default Dropdown = ({navigation}) => {
         >
           <View style={styles.dropdownsRow}>
             <SelectDropdown
-              data={countries}
+              data={languages}
               onSelect={(selectedItem, index) => {
                 console.log(selectedItem, index);
                 setLang([]);

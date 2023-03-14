@@ -1,15 +1,35 @@
-import * as React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Text, View, StyleSheet, Button } from "react-native";
 import { Audio } from "expo-av";
 import Icon from "react-native-vector-icons/FontAwesome";
+import * as FileSystem from "expo-file-system";
 
 export default function Play(params) {
   const [sound, setSound] = React.useState();
-  URI = params.uri;
+  const [audioURI, setaudioURI] = useState();
+  useEffect(() => {
+    fetch(api + "transAudio", {
+      method: "POST",
+      body: JSON.stringify(params.speak),
+      headers: { "Content-Type": "application/json" },
+    }).then(()=>FileSystem.downloadAsync(
+      api+"getAudio",
+      FileSystem.documentDirectory + "voice.wav"
+    ))
+      .then(({ uri }) => {
+        console.log("Finished downloading to ", uri.split("file://")[1]);
+        setaudioURI(uri.split("file://")[1]);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    
+  }, [])
+  
   async function playSound() {
     console.log("Loading Sound");
     const { sound } = await Audio.Sound.createAsync(
-      { uri: URI },
+      { uri: audioURI },
       { shouldPlay: true }
     );
     setSound(sound);

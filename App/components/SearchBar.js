@@ -5,18 +5,11 @@ const SearchBar = (props) => {
   return (
     <View style={styles.container}>
       <TextInput
-        placeholder="Enter Name or Phone Number"
         style={styles.input}
         value={props.searchText}
         onChangeText={(text) => props.setSearchText(text)}
         onSubmitEditing={props.onSubmit}
-      />
-      <TextInput
-        style={styles.input}
-        value={props.searchText}
-        onChangeText={(text) => props.setSearchText(text)}
-        onSubmitEditing={props.onSubmit}
-        placeholder="Enter Amount"
+        placeholder={props.placeholder}
         keyboardType={props.type}
       />
     </View>
