@@ -7,6 +7,17 @@ import * as FileSystem from "expo-file-system";
 export default function Play(params) {
   const [sound, setSound] = React.useState();
   const [audioURI, setaudioURI] = useState();
+   async function playSound() {
+     console.log("Loading Sound");
+     const { sound } = await Audio.Sound.createAsync(
+       { uri: audioURI },
+       { shouldPlay: true }
+     );
+     setSound(sound);
+
+     console.log("Playing Sound");
+     await sound.playAsync();
+   }
   useEffect(() => {
     fetch(api + "transAudio", {
       method: "POST",
@@ -23,20 +34,10 @@ export default function Play(params) {
       .catch((error) => {
         console.error(error);
       });
-    
   }, [])
   
-  async function playSound() {
-    console.log("Loading Sound");
-    const { sound } = await Audio.Sound.createAsync(
-      { uri: audioURI },
-      { shouldPlay: true }
-    );
-    setSound(sound);
-
-    console.log("Playing Sound");
-    await sound.playAsync();
-  }
+  
+ 
 
   React.useEffect(() => {
     return sound
@@ -46,7 +47,7 @@ export default function Play(params) {
         }
       : undefined;
   }, [sound]);
-
+ 
   return (
      <Icon
       name="info"

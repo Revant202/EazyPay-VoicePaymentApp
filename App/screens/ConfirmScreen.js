@@ -1,24 +1,30 @@
-import react, { useState,useEffect } from "react";
-import { View, Text, StyleSheet, FlatList,Image } from "react-native";
+import react, { useState, useEffect } from "react";
+import { View, Text, StyleSheet, FlatList, Image } from "react-native";
 import Mic from "../components/Mic.js";
 import SearchBar from "../components/SearchBar.js";
 import { fonts } from "react-native-elements/dist/config/index.js";
 import SecondaryButton from "../components/SecondaryButton.js";
 import Play from "../components/Play.js";
 
-const DoneScreen = ({ navigation, route }) => {
+
+const ConfirmScreen = ({ navigation, route }) => {
   const { search_name, search_amount } = route.params;
   const [btn, setbtn] = useState({
     hdr: "Enter Payment Details",
-    t1: "Money sent ",
+    t1: "Please confirm the payment ",
     t2: search_name.name,
     t3: search_name.contact_no,
     t4: search_name.bank_name,
-    t5: "Got it",
+    t5: "Confirm Payment",
   });
   const [details, setDetails] = useState({});
   const speak = {
-    text:search_amount + "rupees has been sent to "+ search_name.name+ "press the volume button once to pay again, twice to exit the app"
+    text:
+      "Do you want to send" +
+      search_amount +
+      "to " +
+      search_name.name +
+      ".Press the volume button once to cancel payment,twice to confirm the payment",
   };
 
   useEffect(() => {
@@ -36,22 +42,26 @@ const DoneScreen = ({ navigation, route }) => {
   return (
     <View style={styles.container}>
       <View style={styles.v1}>
-        <Image
-          source={require("../Icons/ok.gif")}
-          alt="loading..."
-          style={{ height: 80, width: 80, marginBottom: 20 }}
-        />
+        <Text style={{ fontSize: 20, fontWeight: "bold" }}>{btn.t1} </Text>
+        <Text style={{ fontSize: 30, fontWeight: "bold" }}></Text>
         <Text style={{ fontSize: 30, fontWeight: "bold" }}>
           ₹{search_amount}
         </Text>
-        <Text style={styles.text}>{btn.t1} </Text>
         <Text style={styles.text}>{btn.t2}</Text>
         <Text style={styles.text}>{btn.t3}</Text>
         <Text style={styles.text}>{search_name.UPI_ID}</Text>
         <Text style={styles.text}>{btn.t4}</Text>
         <Play speak={{ speak }} />
+        <Text style={{ fontSize: 30, fontWeight: "bold" }}></Text>
         <View style={styles.v2}>
-          <SecondaryButton onClick={() => navigation.navigate("HomeScreen")}>
+          <SecondaryButton
+            onClick={() =>
+              navigation.navigate("DoneScreen", {
+                search_name: search_name,
+                search_amount: search_amount,
+              })
+            }
+          >
             {btn.t5}
           </SecondaryButton>
         </View>
@@ -60,7 +70,7 @@ const DoneScreen = ({ navigation, route }) => {
   );
 };
 
-export default DoneScreen;
+export default ConfirmScreen;
 
 const styles = StyleSheet.create({
   container: {

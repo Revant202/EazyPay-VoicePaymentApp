@@ -4,20 +4,21 @@ import SecondaryButton from "../components/SecondaryButton";
 import Mic from "../components/Mic";
 
 export default function LoginScreen({ navigation }) {
-function onClickHandler(){
-  navigation.navigate("HomeScreen");
-}
 
   return (
     <View style={styles.container}>
       <View style={styles.view1}>
-        <PrimaryButton onClick={onClickHandler}>
+        <PrimaryButton>
           Voice Recognition
         </PrimaryButton>
-        <PrimaryButton>Finger Print</PrimaryButton>
+        <PrimaryButton
+          onClick={() => navigation.navigate("BiometricAuthScreen")}
+        >
+          Finger Print
+        </PrimaryButton>
         <PrimaryButton>Face Recognition</PrimaryButton>
         <SecondaryButton>Create New Account</SecondaryButton>
-        <Mic navigation={navigation}/>
+        <Mic navigation={navigation} />
       </View>
     </View>
   );

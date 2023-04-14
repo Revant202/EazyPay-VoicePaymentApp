@@ -12,6 +12,8 @@ import TransactionHistory from "./App/screens/TransactionHistory";
 import CheckBalance from "./App/screens/CheckBalance";
 import DoneScreen from "./App/screens/DoneScreen";
 import WelcomeScreen from "./App/screens/WelcomeScreen";
+import BiometricAuthScreen from "./App/components/BiometricAuthScreen";
+import ConfirmScreen from "./App/screens/ConfirmScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -76,6 +78,14 @@ export default function App({navigation}) {
             component={CheckBalance}
           ></Stack.Screen>
           <Stack.Screen name="DoneScreen" component={DoneScreen}></Stack.Screen>
+          <Stack.Screen
+            name="BiometricAuthScreen"
+            component={BiometricAuthScreen}
+          ></Stack.Screen>
+          <Stack.Screen
+            name="ConfirmScreen"
+            component={ConfirmScreen}
+          ></Stack.Screen>
         </Stack.Navigator>
       </NavigationContainer>
     </>

@@ -74,7 +74,7 @@ export default function HomeScreen({ navigation, route }) {
       </View>
       <View style={styles.footer}>
         <Mic navigation={navigation} />
-        <Play speak={{speak}}/>
+        <Play speak={{speak}} auto="true"/>
       </View>
     </SafeAreaView>
   );

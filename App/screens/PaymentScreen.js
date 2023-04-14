@@ -23,9 +23,9 @@ const PaymentScreen = ({ navigation }) => {
   const [searchNumber, setSearchNumber] = useState(0);
   const [btn, setbtn] = useState({
     hdr: "Enter Payment Details",
-    b1: "Anand Bachker",
-    b2: "8319305246",
-    b3: "anand@paytm",
+    b1: "enter name or phone number",
+    b2: "enter amount",
+    b3:"Pay",
   });
   const [details, setDetails] = useState({})
   const speak = {
@@ -70,7 +70,7 @@ const PaymentScreen = ({ navigation }) => {
             styles.detailText,
             {
               color: "#" + Math.floor(Math.random() * 16777215).toString(16),
-              opacity: 0.85,
+              opacity: 0.95,
             },
           ]}
         >
@@ -92,7 +92,7 @@ const PaymentScreen = ({ navigation }) => {
           <SearchBar
             searchText={searchText}
             setSearchText={setSearchText}
-            placeholder="enter name or phone number"
+            placeholder={btn.b1} 
             type="default"
           />
         </View>
@@ -104,7 +104,7 @@ const PaymentScreen = ({ navigation }) => {
         <SearchBar
           searchText={searchNumber}
           setSearchText={setSearchNumber}
-          placeholder="enter amount"
+          placeholder={btn.b2}
           type="numeric"
         />
       </View>
@@ -117,7 +117,7 @@ const PaymentScreen = ({ navigation }) => {
             },styles.btn
           ]}
         >
-          <Text style={styles.btnText}>Pay</Text>
+          <Text style={styles.btnText}>{btn.b3}</Text>
         </Pressable>
 
         <Play speak={{speak}}/>

@@ -1,1 +1,2 @@
-global.api = "http://192.168.0.101:5000/";
+global.api = "http://172.16.101.20:5000/";
+global.transRecord = {}

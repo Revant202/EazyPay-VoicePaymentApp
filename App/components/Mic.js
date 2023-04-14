@@ -4,18 +4,22 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import { Audio } from "expo-av";
 import * as FileSystem from "expo-file-system";
 import "../global.js"
-
+import moment from 'moment';
 const FLASK_BACKEND = api+"audio";
 
+  
 export default function Mic({ navigation }) {
   const [recording, setRecording] = useState();
   const [action, setAction] = useState(0);
   const [amount, setAmount] = useState(0);
   const [name, setName] = useState("");
+
   useEffect(() => {
     console.log("ff")
     if (action === 1)
-      navigation.navigate("DoneScreen",{search_name: name,search_amount:amount});
+      {var date = moment().utcOffset('+05:30').format(' hh:mm:ss a');
+      transRecord += {name:name,amount:amount,time:date};
+      navigation.navigate("ConfirmScreen",{search_name: name,search_amount:amount});} 
     if (action === 2)
       navigation.navigate("CheckBalance");
     if(action === 3)

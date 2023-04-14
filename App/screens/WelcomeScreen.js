@@ -25,7 +25,7 @@ const languages = [
 export default Dropdown = ({navigation}) => {
   const [lang, setLang] = useState("English");
   function onClickHandler() {
-    navigation.navigate("HomeScreen");
+    navigation.navigate("BiometricAuthScreen");
     }
   useEffect(() => {
     fetch(api+"setLang", {
