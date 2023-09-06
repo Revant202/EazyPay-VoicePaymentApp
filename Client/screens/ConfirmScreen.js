@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { View, Text, StyleSheet} from "react-native";
+import { View, Text, StyleSheet,Image,ImageBackground} from "react-native";
 import SecondaryButton from "../components/SecondaryButton.js";
 import Play from "../components/Play.js";
 
@@ -7,12 +7,12 @@ import Play from "../components/Play.js";
 const ConfirmScreen = ({ navigation, route }) => {
   const { search_name, search_amount } = route.params;
   const [text, settext] = useState({
-    hdr: "Enter Payment Details",
-    t1: "Please confirm the payment ",
+    t1: "Send money to",
     t2: search_name.name,
     t3: search_name.contact_no,
-    t4: search_name.bank_name,
-    t5: "Confirm Payment",
+    t4: search_name.UPI_ID,
+    t5: "Yes, Proceed",
+    t6: "Amount",
   });
   const [details, setDetails] = useState({});
   const speak = {
@@ -37,19 +37,96 @@ const ConfirmScreen = ({ navigation, route }) => {
       });
   }, []);
   return (
-    <View style={styles.container}>
-      <View style={styles.v1}>
-        <Text style={{ fontSize: 20, fontWeight: "bold" }}>{text.t1} </Text>
-        <Text style={{ fontSize: 30, fontWeight: "bold" }}></Text>
-        <Text style={{ fontSize: 30, fontWeight: "bold" }}>
-          ₹{search_amount}
-        </Text>
-        <Text style={styles.text}>{text.t2}</Text>
-        <Text style={styles.text}>{text.t3}</Text>
-        <Text style={styles.text}>{search_name.UPI_ID}</Text>
-        <Text style={styles.text}>{text.t4}</Text>
-        <Play speak={{ speak }} />
-        <Text style={{ fontSize: 30, fontWeight: "bold" }}></Text>
+    <ImageBackground
+      source={require("../data/Icons/background.png")}
+      resizeMode="cover"
+      style={styles.container}
+    >
+    
+    <ImageBackground
+        source={require("../data/Icons/card-background2.png")}
+        resizeMode="cover"
+        style={styles.v1}
+      >
+        <View
+          style={{
+            flexDirection: "row",
+            // gap: 35,
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <Text
+            style={{
+              color: "white",
+              letterSpacing: 4,
+            }}
+          >
+            {text.t6}
+          </Text>
+          <Text
+            style={{
+              color: "white",
+              letterSpacing: 2,
+            }}
+          >
+            {text.t4}
+          </Text>
+        </View>
+        <View
+          style={{
+            flexDirection: "row",
+            // gap: 35,
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <Text
+            style={{
+              color: "white",
+              letterSpacing: 2,
+              fontSize: 25,
+            }}
+          >
+            ₹{search_amount}
+          </Text>
+          <Text
+            style={{
+              color: "white",
+              fontSize: 15,
+              letterSpacing: 4,
+            }}
+          >
+            {/* {text.t3} */}
+            **** 5142
+          </Text>
+        </View>
+        <View
+          style={{
+            flexDirection: "row",
+            // gap: 35,
+            alignItems: "center",
+            // justifyContent: "space-between",
+            gap: 20,
+            marginTop: 70,
+          }}
+        >
+          <Text
+            style={{
+              color: "white",
+              letterSpacing: 1,
+              fontSize: 14,
+            }}
+          >
+            {text.t1} {text.t2}
+          </Text>
+          <Image
+            source={require("../data/Icons/question.png")}
+            alt="loading..."
+            style={{ height: 25, width: 20 }}
+          />
+        </View>
+      </ImageBackground>
         <View style={styles.v2}>
           <SecondaryButton
             onClick={() =>
@@ -62,8 +139,7 @@ const ConfirmScreen = ({ navigation, route }) => {
             {text.t5}
           </SecondaryButton>
         </View>
-      </View>
-    </View>
+      </ImageBackground>
   );
 };
 
@@ -73,29 +149,30 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "rgba(11, 10, 7,0.87)",
-  },
-  v1: {
-    display: "flex",
-    flex: 1,
     alignItems: "center",
-    borderColor: "black",
-    borderRadius: 0.8,
-    backgroundColor: "#fff",
-    marginTop: 120,
-    marginBottom: 120,
-    padding: 10,
     justifyContent: "center",
   },
+  v1: {
+    color: "snow",
+    height: 207,
+    width: 348,
+    borderRadius: 15,
+    paddingTop: 30,
+    paddingLeft: 30,
+    paddingBottom: 30,
+    paddingRight: 40,
+  },
   v2: {
-    display: "flex",
-    flex: 1,
     borderRadius: 0.8,
-    // backgroundColor: "#fff",
-    // marginTop: 55,
+    backgroundColor: "transparent",
+    marginTop: 40,
     justifyContent: "center",
   },
   text: {
-    fontSize: 18,
-    padding: 1,
+    fontSize: 14,
+    // padding: 2,
+    color: "snow",
+    fontWeight: "200",
   },
+  
 });

@@ -7,7 +7,7 @@ export default function PrimaryButton(params) {
     onPress={params.onClick}
       style={({ pressed }) => [pressed ? { opacity: 0.85 } : {}]}
     >
-      <ImageBackground source={require('../data/Icons/card-background.png')} resizeMode="cover" style={styles.view}><Text style={styles.text}>{params.children}</Text></ImageBackground>
+      <ImageBackground source={require('../data/Icons/background.png')} resizeMode="cover" style={styles.view}><Text style={styles.text}>{params.children}</Text></ImageBackground>
     </TouchableOpacity>
   );
 }
@@ -16,12 +16,13 @@ const styles = StyleSheet.create({
     width: 300,
     height: 50,
     alignSelf: "center",
-    borderRadius: 20,
+    borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",
     marginTop: 10,
     marginBottom: 10,
     overflow: "hidden",
+    opacity: 0.95,
   },
 
   text: {

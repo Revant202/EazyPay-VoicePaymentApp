@@ -270,7 +270,7 @@ const styles = StyleSheet.create({
     marginTop: 50,
     marginBottom: 30,
   },
-  v2: { height: 225, marginHorizontal: 10, marginBottom: 40 },
+  v2: { height: 215, marginHorizontal: 10, marginBottom: 40 },
   v3: {
     backgroundColor: "snow",
     borderTopLeftRadius: 50,
@@ -331,7 +331,7 @@ const styles = StyleSheet.create({
   },
   mic: {
     position: "absolute",
-    bottom:25,
-    right: 25,
+    bottom:485,
+    right: 39 ,
   },
 });

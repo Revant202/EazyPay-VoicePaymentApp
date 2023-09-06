@@ -32,7 +32,7 @@ export default function AppNavigation({ navigation }) {
                   <Text
                     style={{
                       fontSize: 22,
-                      color: "#262626",
+                      color: "#0F121E",
                       letterSpacing: 0.5,
                       marginHorizontal: 5,
                     }}
@@ -69,8 +69,14 @@ export default function AppNavigation({ navigation }) {
             component={GetStarted}
             options={{ headerShown: false }}
           ></Stack.Screen>
-          <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
-          <Stack.Screen name="LoginScreen" component={LoginScreen} />
+          <Stack.Screen
+            name="WelcomeScreen"
+            component={WelcomeScreen}
+          />
+          <Stack.Screen
+            name="LoginScreen"
+            component={LoginScreen}
+          />
           <Stack.Screen
             name="Home"
             component={Home}
@@ -82,12 +88,13 @@ export default function AppNavigation({ navigation }) {
             component={TransactionHistory}
           />
           <Stack.Screen name="CheckBalance" component={CheckBalance} />
-          <Stack.Screen name="DoneScreen" component={DoneScreen} />
+          <Stack.Screen name="DoneScreen" component={DoneScreen}  options={{ headerShown: false }}/>
           <Stack.Screen
             name="BiometricAuthScreen"
             component={BiometricAuthScreen}
+            options={{ headerShown: false }}
           />
-          <Stack.Screen name="ConfirmScreen" component={ConfirmScreen} />
+          <Stack.Screen name="ConfirmScreen" component={ConfirmScreen}  options={{ headerShown: false }}/>
         </Stack.Navigator>
       </NavigationContainer>
     </>

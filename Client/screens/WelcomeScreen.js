@@ -7,6 +7,7 @@ import {
   Dimensions,
   StyleSheet,
   ScrollView,
+  ImageBackground,
 } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 const { width } = Dimensions.get("window");
@@ -16,10 +17,16 @@ import PrimaryButton from "../components/PrimaryButton";
 const languages = [
   "English",
   "Hindi",
-  "Telugu",
-  "Marathi",
   "Bengali",
   "Gujarati",
+  "Kannada",
+  "Marathi",
+  "Malayalam",
+  "Odia",
+  "Punjabi",
+  "Sindhi",
+  "Tamil",
+  "Telugu",
 ];
 
 export default Dropdown = ({navigation}) => {
@@ -36,25 +43,18 @@ export default Dropdown = ({navigation}) => {
   }, [lang])
   
 
-  // const renderHeader = () => {
-  //   return (
-  //     <View style={[styles.header, styles.shadow]}>
-  //       <Text style={styles.headerTitle}>{'Please select a language'}</Text>
-  //     </View>
-  //   );
-  // };
 
   return (
-    <SafeAreaView style={styles.saveAreaViewContainer}>
-      <StatusBar backgroundColor="#FFF" barStyle="dark-content" />
-      <View style={styles.viewContainer}>
-        {/* {renderHeader()} */}
+    <ImageBackground
+      source={require("../data/Icons/background2.png")}
+      resizeMode="cover"
+      style={styles.container}
+    >
         <ScrollView
-          showsVerticalScrollIndicator={false}
-          alwaysBounceVertical={false}
+          // showsVerticalScrollIndicator={false}
+          // alwaysBounceVertical={false}
           contentContainerStyle={styles.scrollViewContainer}
         >
-          <View style={styles.dropdownsRow}>
             <SelectDropdown
               data={languages}
               onSelect={(selectedItem, index) => {
@@ -69,8 +69,8 @@ export default Dropdown = ({navigation}) => {
               rowTextForSelection={(item, index) => {
                 return item;
               }}
-              buttonStyle={styles.dropdown1BtnStyle}
-              buttonTextStyle={styles.dropdown1BtnTxtStyle}
+              buttonStyle={styles.dropdownBtnStyle}
+              buttonTextStyle={styles.dropdownBtnTxtStyle}
               renderDropdownIcon={(isOpened) => {
                 return (
                   <FontAwesome
@@ -81,75 +81,53 @@ export default Dropdown = ({navigation}) => {
                 );
               }}
               dropdownIconPosition={"right"}
-              dropdownStyle={styles.dropdown1DropdownStyle}
-              rowStyle={styles.dropdown1RowStyle}
-              rowTextStyle={styles.dropdown1RowTxtStyle}
+              dropdownStyle={styles.dropdownDropdownStyle}
+              rowStyle={styles.dropdownRowStyle}
+              rowTextStyle={styles.dropdownRowTxtStyle}
+              selectedRowStyle={styles.selectedRowStyle}
+              selectedRowTextStyle={styles.selectedRowTxtStyle}
             />
-          </View>
         </ScrollView>
-      </View>
       <View style={styles.buttonContainer}>
       <PrimaryButton onClick={onClickHandler}>Next</PrimaryButton>
       </View>
-    </SafeAreaView>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
-  shadow: {
-    shadowColor: '#000',
-    shadowOffset: {width: 0, height: 6},
-    shadowOpacity: 0.1,
-    shadowRadius: 10,
-    elevation: 10,
+  container: {
+    flex: 1,
+    // backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
-  header: {
-    flexDirection: 'row',
-    width,
-    height: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#F6F6F6',
-  },
-  headerTitle: {color: '#000', fontWeight: 'bold', fontSize: 16},
-  saveAreaViewContainer: {flex: 1, backgroundColor: '#FFF'},
-  viewContainer: {flex: 1, width, backgroundColor: '#FFF'},
+  
+ 
   scrollViewContainer: {
-    flexGrow: 1,
-    justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: '10%',
+    marginTop: 40,
   },
-  dropdownsRow: {flexDirection: 'row', width: '100%', paddingHorizontal: '5%'},
 
-  dropdown1BtnStyle: {
+  dropdownBtnStyle: {
     flex: 1,
     height: 50,
     backgroundColor: '#FFF',
     borderRadius: 8,
     borderWidth: 1,
     borderColor: '#444',
+    alignItems: 'center',
+    width: 300,
   },
-  dropdown1BtnTxtStyle: {color: '#444', textAlign: 'left'},
-  dropdown1DropdownStyle: {backgroundColor: '#EFEFEF'},
-  dropdown1RowStyle: {backgroundColor: '#EFEFEF', borderBottomColor: '#C5C5C5'},
-  dropdown1RowTxtStyle: {color: '#444', textAlign: 'left'},
-  divider: {width: 12},
-  dropdown2BtnStyle: {
-    flex: 1,
-    height: 50,
-    backgroundColor: '#FFF',
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#444',
-  },
-  dropdown2BtnTxtStyle: {color: '#444', textAlign: 'left'},
-  dropdown2DropdownStyle: {backgroundColor: '#EFEFEF'},
-  dropdown2RowStyle: {backgroundColor: '#EFEFEF', borderBottomColor: '#C5C5C5'},
-  dropdown2RowTxtStyle: {color: '#444', textAlign: 'left'},
+  dropdownBtnTxtStyle: {color: '#444', textAlign: 'left'},
+  dropdownDropdownStyle: {backgroundColor: '#EFEFEF'},
+  dropdownRowStyle: {backgroundColor: '#EFEFEF', borderBottomColor: '#C5C5C5',},
+  dropdownRowTxtStyle: {color: '#444', textAlign: 'center',fontSize: 16,},
+  selectedRowStyle: {backgroundColor: '#3E180C', textAlign: 'center'},
+  selectedRowTxtStyle: {color: 'snow', textAlign: 'center',fontSize: 20,fontWeight: 'bold'},
   buttonContainer: { 
     display: 'flex',
-    backgroundColor: '#fff',
+    backgroundColor: 'transparent' ,
     justifyContent: 'center',
     alignItems: 'center',
     paddingBottom: 20

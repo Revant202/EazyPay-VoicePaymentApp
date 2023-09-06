@@ -79,7 +79,7 @@ export default function Mic({ navigation }) {
    
         <TouchableOpacity
       onPress={recording ? stopRecording : startRecording}
-    >{recording?<MicOnIcon width={80} height={80}/>:<MicIcon width={80} height={80}/>}
+    >{recording?<MicOnIcon width={70} height={70}/>:<MicIcon width={70} height={70}/>}
     </TouchableOpacity>
     </>
     

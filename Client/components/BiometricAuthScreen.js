@@ -1,7 +1,7 @@
 import * as LocalAuthentication from "expo-local-authentication";
 import * as React from "react";
-import { StyleSheet, View} from "react-native"; 
-import HomeScreen from "../screens/HomeScreen";
+import { StyleSheet, View,ImageBackground} from "react-native"; 
+import Home from "../screens/Home";
 
 const EResult = {
   CANCELLED: "CANCELLED",
@@ -47,7 +47,7 @@ export default function BiometricAuthScreen({ navigation }) {
 
       if (results.success) {
         setResult(EResult.SUCCESS);
-        navigation.navigate("HomeScreen");
+        navigation.navigate("Home");
       } else if (results.error === "unknown") {
         setResult(EResult.DISABLED);
       } else if (
@@ -111,7 +111,11 @@ export default function BiometricAuthScreen({ navigation }) {
   }
 
   return (
-    <View style={styles.container}></View>
+    <ImageBackground
+      source={require("../data/Icons/background2.png")}
+      resizeMode="cover"
+      style={styles.container}
+    />
     // <View style={styles.container}>
     //   <Text>{description}</Text>
     //   {/* {facialRecognitionAvailable || fingerprintAvailable || irisAvailable ? (
@@ -129,6 +133,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#F6F6F6",
     alignItems: "center",
+    justifyContent: "center",
   },
 
 });

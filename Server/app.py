@@ -114,7 +114,7 @@ def upload_audio():
             print(text)
             input_words = list(text.split(" "))
             words = list(text.split(" "))
-            rem = ["to", "rupees", "make", "of","were" ,*scales, *tens, *units]
+            rem = ["to", "rupees", "make", "of","were","rs" ,*scales, *tens, *units]
             amount = -1
             action = 0
             for x in input_words:
@@ -137,6 +137,7 @@ def upload_audio():
                 if x in rem:
                     words.remove(x)
             name = words[0]
+            print(name)
             if(action == 1):
                 if amount == -1:
                     amount = text2int(" ".join([input_words[input_words.index("rupees")-2], input_words[input_words.index("rupees")-1]]))
