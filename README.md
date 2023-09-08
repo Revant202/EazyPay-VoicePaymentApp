@@ -18,8 +18,8 @@ Ezpay is a multilingual voice-controlled payment application developed using Rea
 
 ## Screenshots
 
-![Language Selection](https://github.com/Revant202/EzPay/assets/76607683/a15aa76c-49fb-4e96-a1c7-a43eddd1718d)
 ![Get Started](https://github.com/Revant202/EzPay/assets/76607683/d76f3bdd-dcc3-4aa0-9ed1-48344ea4c8a3)
+![Language Selection](https://github.com/Revant202/EzPay/assets/76607683/a15aa76c-49fb-4e96-a1c7-a43eddd1718d)
 ![Home - engilsh](https://github.com/Revant202/EzPay/assets/76607683/7f3edcb7-ffb6-4f6b-b53a-413a0661755f)
 ![Home - all](https://github.com/Revant202/EzPay/assets/76607683/d80f7802-8729-4967-a709-b66a99e68387)
 ![Confirm Screen](https://github.com/Revant202/EzPay/assets/76607683/4c3c8df1-71bd-4f4c-b83d-a07087df4b3f)
